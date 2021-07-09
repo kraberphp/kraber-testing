@@ -1,0 +1,26 @@
+language: php
+
+php:
+  - 8.0.2
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+env:
+  global:
+    - XDEBUG_MODE=coverage
+
+install:
+  - composer install --no-interaction
+  - composer require scrutinizer/ocular --no-interaction
+
+before_script:
+  - mkdir -p build/{logs, coverage}
+
+script:
+  - composer ci
+
+after_script:
+  - composer ocular code-coverage:upload --format=php-clover build/logs/clover.xml

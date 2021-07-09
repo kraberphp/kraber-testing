@@ -1,0 +1,63 @@
+{
+    "name": "fpisani/kraber-testing",
+    "type": "library",
+    "description": "",
+    "keywords": [],
+    "homepage": "https://github.com/f-pisani/kraber-testing",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florian Pisani",
+            "email": "pisani.florian@gmail.com",
+            "homepage": "https://github.com/f-pisani/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "phpunit/phpunit": "^9"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.90",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kraber\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kraber\\Test\\": "tests/",
+            "Kraber\\Test\\Unit\\": "tests/unit/",
+            "Kraber\\Test\\Integration\\": "tests/integration/"
+        }
+    },
+    "provide": {
+
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "scripts": {
+        "ensure-build-directory": "mkdir -p build/logs",
+        "cs": [
+            "@ensure-build-directory",
+            "phpcs"
+        ],
+        "cbf": [
+            "@ensure-build-directory",
+            "phpcbf"
+        ],
+        "qa": "phpstan --no-progress",
+        "qa-baseline": "@qa --generate-baseline",
+        "test": "phpunit",
+        "test-coverage": "@test --coverage-html=build/coverage --coverage-clover=build/logs/clover.xml",
+        "ci": [
+            "@cs",
+            "@qa",
+            "@test-coverage"
+        ]
+    }
+}
